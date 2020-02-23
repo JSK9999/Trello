@@ -4,26 +4,25 @@ import { connect, useDispatch } from "react-redux";
 import TrelloActionButton from "./components/TrelloActionButton";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { sort } from "./actions/listsActions";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body{
     background:#6E6E6E;
   }
 `;
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 const mapStateToProps = state => ({
-  lists: state.lists
+  lists: state.lists,
+  cards: state.lists.cards
 });
 
-const styles = {
-  listsContainder: {
-    display: "flex",
-    flexDirection: "row"
-  }
-};
-
-function App({ lists }) {
+function App(state) {
+  const { lists } = state;
   const dispatch = useDispatch();
 
   const onDragEnd = result => {
@@ -45,11 +44,7 @@ function App({ lists }) {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="akk-list" direction="horizontal" type="list">
         {provided => (
-          <div
-            style={styles.listsContainder}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
+          <ListContainer {...provided.droppableProps} ref={provided.innerRef}>
             {lists.map((list, index) => (
               <TrelloList
                 listID={list.id}
@@ -60,9 +55,9 @@ function App({ lists }) {
               />
             ))}
             {provided.placeholder}
-            <TrelloActionButton list />
             {/*카드 밖에 추가버튼 뜸 왜냐면 list 가 참값이니까.*/}
-          </div>
+            <TrelloActionButton list />
+          </ListContainer>
         )}
       </Droppable>
       <GlobalStyle />

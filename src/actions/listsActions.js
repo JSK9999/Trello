@@ -1,7 +1,7 @@
-import { CONSTANTS } from "../actions";
+import { ALLACTIONS } from "../actions";
 export const addList = title => {
   return {
-    type: CONSTANTS.ADD_LIST,
+    type: ALLACTIONS.ADD_LIST,
     payload: title
   };
 };
@@ -15,7 +15,7 @@ export const sort = (
   type
 ) => {
   return {
-    type: CONSTANTS.DRAG_HAPPENED,
+    type: ALLACTIONS.DRAG_HAPPENED,
     payload: {
       droppableIdStart,
       droppableIdEnd,

@@ -6,7 +6,8 @@ import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { useState } from "react";
 import TrelloForm from "./TrelloForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
+import { editCard } from "../actions";
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -30,6 +31,7 @@ const EditButton = styled(Icon)`
 `;
 
 function TrelloCard({ text, id, index, listID }) {
+  console.log(id);
   //card 의 text
   const [cardText, setText] = useState(text);
   const [edit, setEdit] = useState(false);
@@ -42,8 +44,9 @@ function TrelloCard({ text, id, index, listID }) {
     setEdit(false);
   };
   const saveCard = e => {
-    e.preventDefalut();
-    disptach(edit(id, listID, cardText));
+    e.preventDefault();
+    disptach(editCard(id, listID, cardText));
+
     setEdit(false);
   };
   const renderEditForm = () => {
@@ -78,4 +81,4 @@ function TrelloCard({ text, id, index, listID }) {
   };
   return edit ? renderEditForm() : renderCard();
 }
-export default TrelloCard;
+export default connect()(TrelloCard);
