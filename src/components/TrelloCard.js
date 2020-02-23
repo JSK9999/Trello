@@ -5,6 +5,8 @@ import { CardContent, Icon } from "@material-ui/core";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { useState } from "react";
+import TrelloForm from "./TrelloForm";
+import { useDispatch } from "react-redux";
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -27,12 +29,30 @@ const EditButton = styled(Icon)`
   }
 `;
 
-function TrelloCard({ text, id, index }) {
+function TrelloCard({ text, id, index, listID }) {
+  //card 의 text
+  const [cardText, setText] = useState(text);
   const [edit, setEdit] = useState(false);
+  const disptach = useDispatch();
 
+  const handleChange = e => {
+    setText(e.target.value);
+  };
+  const closeForm = e => {
+    setEdit(false);
+  };
+  const saveCard = e => {
+    e.preventDefalut();
+    disptach(edit(id, listID, cardText));
+    setEdit(false);
+  };
   const renderEditForm = () => {
     //이제 여기에 TrelloForm 으로 지정하고 파일만들어서 그 새 카드 창 나오게 해야한다.
-    return <div> </div>;
+    return (
+      <TrelloForm text={cardText} onChange={handleChange} closeForm={closeForm}>
+        <div onClick={saveCard}>저장</div>
+      </TrelloForm>
+    );
   };
 
   const renderCard = () => {
@@ -45,7 +65,7 @@ function TrelloCard({ text, id, index }) {
             {...provided.dragHandleProps}
           >
             <Card>
-              <EditButton onMouseDown={() => setEdit(true)}>edit</EditButton>
+              <EditButton onMouseDown={() => setEdit(!edit)}>edit</EditButton>
               <CardContent>
                 <Typography gutterBottom>{text}</Typography>
               </CardContent>
