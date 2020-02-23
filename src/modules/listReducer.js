@@ -1,22 +1,33 @@
-import { ALLACTIONS } from "../actions";
+import uuid from "uuidv4";
 
+const ADD_CARD = "ADD_CARD";
+const ADD_LIST = "ADD_LIST";
+const id = uuid();
+
+export const addList = () => ({ type: ADD_LIST, payload: { id } });
 const initialState = {
   "0번리스트": {
     id: "0번리스트",
-    cards: ["0번카드"],
-    title: "myList"
+    title: "myList",
+    cards: ["0번카드"]
   }
 };
-function listReducer(state = initialState, action) {
+export default function listReducer(state = initialState, action) {
   switch (action.type) {
-    case ALLACTIONS.ADD_LIST:
-    case ALLACTIONS.ADD_CARD:
+    case ADD_LIST: {
+      const { title, id } = action.payload;
+      const newList = {
+        title: title,
+        id: `리스트${id}`,
+        cards: []
+      };
+    }
+    case ADD_CARD:
     default:
       return state;
   }
 }
 
-export default listReducer;
 /*
 let listID = 1;
 let cardID = 2;
