@@ -4,12 +4,6 @@ object-assign
 @license MIT
 */
 
-/*!
-	autosize 4.0.2
-	license: MIT
-	http://www.jacklmoore.com/autosize
-*/
-
 /**
  * A better abstraction over CSS.
  *
