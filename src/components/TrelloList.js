@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TrelloCard from "../components/TrelloCard";
 import { useSelector } from "react-redux";
 import TrelloAdd from "./TrelloAdd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 const ListContainer = styled.div`
   background-color: #dfe3e6;
@@ -36,28 +37,42 @@ const ListTitle = styled.h4`
 `;
 
 function TrelloList({ title, cards, listID, list, index }) {
-  const cardlist = useSelector(state => state.cards);
-
   return (
-    <ListContainer>
-      <TitleContainer>
-        <ListTitle> {title}</ListTitle>
-      </TitleContainer>
-      {cards.map((card, index) => {
-        return (
-          <TrelloCard
-            //카드에는 텍스트 아이디 리스트
-            text={card.text}
-            key={card.id}
-            id={card.id}
-            index={index}
-            list={listID}
-          />
-        );
-      })}
-
-      <TrelloAdd listID={listID} />
-    </ListContainer>
+    <Draggable draggableId={String(listID)} index={index}>
+      {provided => (
+        <ListContainer
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Droppable droppableId={String(listID)} type="card">
+            {provided => (
+              <div>
+                <TitleContainer>
+                  <ListTitle> {title}</ListTitle>
+                </TitleContainer>
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {cards.map((card, index) => {
+                    return (
+                      <TrelloCard
+                        //카드에는 텍스트 아이디 리스트
+                        text={card.text}
+                        key={card.id}
+                        id={card.id}
+                        index={index}
+                        list={listID}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                  <TrelloAdd listID={listID} />
+                </div>
+              </div>
+            )}
+          </Droppable>
+        </ListContainer>
+      )}
+    </Draggable>
   );
 }
 export default TrelloList;

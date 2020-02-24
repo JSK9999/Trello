@@ -7,6 +7,7 @@ export const addList = title => {
   const id = uuid();
   return { type: ADD_LIST, payload: { title, id } };
 };
+
 const initialState = {
   "0리스트": {
     id: "0리스트",
@@ -50,6 +51,37 @@ export default function listReducer(state = initialState, action) {
       const list = state[listID];
       list.cards.push(`${id}카드`);
       return { ...state, [listID]: list };
+
+    case DRAG_HAPPENED:
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexEnd,
+        droppableIndexStart,
+        type
+      } = action.payload;
+      if (type === "list") {
+        return state;
+      }
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state[droppableIdStart];
+        const card = list.cards.splice(droppableIndexStart, 1);
+        list.cards.splice(droppableIndexEnd, 0, ...card);
+        return { ...state, [droppableIdStart]: list };
+      }
+      if (droppableIdStart !== droppableIdEnd) {
+        const listStart = state[droppableIdStart];
+        const card = listStart.cards.splice(droppableIndexStart, 1);
+        const listEnd = state[droppableIdEnd];
+
+        listEnd.cards.splice(droppableIndexEnd, 0, ...card);
+        return {
+          ...state,
+          [droppableIdStart]: listStart,
+          [droppableIdEnd]: listEnd
+        };
+      }
+      return state;
     default:
       return state;
   }

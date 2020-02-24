@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Icon from "@material-ui/core/Icon";
 import TrelloForm from "./TrelloForm";
 import TrelloButton from "./TrelloButton";
+import { Draggable } from "react-beautiful-dnd";
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -72,13 +73,21 @@ function TrelloCard({ text, id, index, listID }) {
   };
   const renderCard = () => {
     return (
-      <CardContainer>
-        <Card>
-          <CardContent>
-            <Typography>{text}</Typography>
-          </CardContent>
-        </Card>
-      </CardContainer>
+      <Draggable draggableId={String(id)} index={index}>
+        {porvided => (
+          <CardContainer
+            {...porvided.draggableProps}
+            {...porvided.dragHandleProps}
+            ref={porvided.innerRef}
+          >
+            <Card>
+              <CardContent>
+                <Typography>{text}</Typography>
+              </CardContent>
+            </Card>
+          </CardContainer>
+        )}
+      </Draggable>
     );
   };
   console.log(text);
