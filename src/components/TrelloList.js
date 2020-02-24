@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import TrelloCard from "../components/TrelloCard";
 import { useSelector } from "react-redux";
+import TrelloAdd from "./TrelloAdd";
+
 const ListContainer = styled.div`
-  background-color: "green";
+  background-color: #dfe3e6;
   border-radius: 3px;
   width: 300px;
   padding: 8px;
   height: 100%;
-  margin: 0 8 0 0;
+  margin: 0 8px 0 0;
 `;
 const StyledInput = styled.input`
   width: 100%;
@@ -29,42 +31,33 @@ const TitleContainer = styled.div`
 const ListTitle = styled.h4`
   transition: 0.3s ease-in;
   ${TitleContainer}:hover & {
-    background: #eee;
+    background: #ccc;
   }
 `;
 
 function TrelloList({ title, cards, listID, list, index }) {
   const cardlist = useSelector(state => state.cards);
-  console.log(listID);
-  console.log(title);
-  console.log(cards);
-  console.log(cardlist);
+
   return (
-    <>
-      <ListContainer>
-        <TitleContainer>
-          <ListTitle>
-            리스트입니다.
-            {cards.map((card, index) => {
-              const littlecard = cardlist[card];
-              console.log(littlecard);
-              if (littlecard) {
-                return (
-                  <TrelloCard
-                    //카드에는 텍스트 아이디 리스트
-                    text={littlecard.text}
-                    key={littlecard.id}
-                    id={littlecard.id}
-                    index={index}
-                    list={littlecard.list}
-                  />
-                );
-              }
-            })}
-          </ListTitle>
-        </TitleContainer>
-      </ListContainer>
-    </>
+    <ListContainer>
+      <TitleContainer>
+        <ListTitle> {title}</ListTitle>
+      </TitleContainer>
+      {cards.map((card, index) => {
+        return (
+          <TrelloCard
+            //카드에는 텍스트 아이디 리스트
+            text={card.text}
+            key={card.id}
+            id={card.id}
+            index={index}
+            list={listID}
+          />
+        );
+      })}
+
+      <TrelloAdd listID={listID} />
+    </ListContainer>
   );
 }
 export default TrelloList;

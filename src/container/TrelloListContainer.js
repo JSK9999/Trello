@@ -11,22 +11,31 @@ const ListsContainer = styled.div`
 
 function TrelloListContainer() {
   const lists = useSelector(state => state.lists);
-
+  const origin = useSelector(state => state.origin);
+  const cards = useSelector(state => state.cards);
   console.log(lists);
   return (
     <div>
       <ListsContainer>
-        {lists.map((list, index) => (
-          <TrelloList
-            list={list}
-            listID={list.id}
-            title={list.title}
-            key={list.id}
-            cards={list.cards}
-            index={index}
-          />
-        ))}
-        <TrelloAdd />
+        {origin.map((listID, index) => {
+          const list = lists[listID];
+          if (list) {
+            const listCards = list.cards.map(cardID => cards[cardID]);
+
+            return (
+              <TrelloList
+                list={list}
+                listID={list.id}
+                title={list.title}
+                key={list.id}
+                cards={listCards}
+                index={index}
+              />
+            );
+          }
+        })}
+
+        <TrelloAdd list />
       </ListsContainer>
     </div>
   );
