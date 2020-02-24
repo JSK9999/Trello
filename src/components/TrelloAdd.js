@@ -63,7 +63,7 @@ function TrelloAdd(props) {
     </TrelloForm>
   ) : (
     <TrelloOpenForm list={list} onClick={openForm}>
-      {list ? "add on list" : "add on  card"}
+      {list ? "리스트 추가" : "카드 추가"}
     </TrelloOpenForm>
   );
 }
