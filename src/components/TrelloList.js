@@ -1,52 +1,78 @@
 import React from "react";
-import TrelloCard from "./TrelloCard";
-import TrelloActionButton from "./TrelloActionButton";
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
+import TrelloCard from "../components/TrelloCard";
+import { useSelector } from "react-redux";
+import TrelloAdd from "./TrelloAdd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
-const styles = {
-  container: {
-    backgroundColor: "#dfe3e6",
-    borderRadius: 3,
-    width: 300,
-    padding: 8,
-    marginRight: 8
+const ListContainer = styled.div`
+  background-color: #dfe3e6;
+  border-radius: 3px;
+  width: 300px;
+  padding: 8px;
+  height: 100%;
+  margin: 0 8px 0 0;
+`;
+const StyledInput = styled.input`
+  width: 100%;
+  border: none;
+  outline-color: blue;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  padding: 5px;
+`;
+const TitleContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+`;
+const ListTitle = styled.h4`
+  transition: 0.3s ease-in;
+  ${TitleContainer}:hover & {
+    background: #ccc;
   }
-};
+`;
 
-function TrelloList({ title, cards, listID, index }) {
+function TrelloList({ title, cards, listID, list, index }) {
   return (
     <Draggable draggableId={String(listID)} index={index}>
       {provided => (
-        <div
+        <ListContainer
           {...provided.draggableProps}
-          ref={provided.innerRef}
           {...provided.dragHandleProps}
+          ref={provided.innerRef}
         >
-          <div style={styles.container}>
-            <Droppable droppableId={String(listID)} type="card">
-              {provided => (
+          <Droppable droppableId={String(listID)} type="card">
+            {provided => (
+              <div>
+                <TitleContainer>
+                  <ListTitle> {title}</ListTitle>
+                </TitleContainer>
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  <h4>{title}</h4>
-                  {cards.map((card, index) => (
-                    <TrelloCard
-                      key={card.id}
-                      index={index}
-                      text={card.text}
-                      id={card.id}
-                      listID={listID}
-                    />
-                  ))}
+                  {cards.map((card, index) => {
+                    return (
+                      <TrelloCard
+                        //카드에는 텍스트 아이디 리스트
+                        text={card.text}
+                        key={card.id}
+                        id={card.id}
+                        index={index}
+                        list={listID}
+                      />
+                    );
+                  })}
                   {provided.placeholder}
-                  <TrelloActionButton listID={listID} />{" "}
-                  {/*카드안에  list 가없으니까 false 이다.  */}
+                  <TrelloAdd listID={listID} />
                 </div>
-              )}
-            </Droppable>
-          </div>
-        </div>
+              </div>
+            )}
+          </Droppable>
+        </ListContainer>
       )}
     </Draggable>
   );
 }
-
 export default TrelloList;
