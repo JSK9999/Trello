@@ -10,6 +10,7 @@ const initialState = {
     list: "0리스트"
   }
 };
+
 export default function cardReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_CARD:

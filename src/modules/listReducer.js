@@ -3,12 +3,8 @@ const ADD_CARD = "ADD_CARD";
 const ADD_LIST = "ADD_LIST";
 const DRAG_HAPPENED = "DRAG_HAPPENED";
 
-export const addList = title => {
-  return dispatch => {
-    const id = uuid();
-    dispatch({ type: ADD_LIST, payload: { title, id } });
-  };
-};
+export const addList = title => ({ type: ADD_LIST, payload: { title } });
+
 const initialState = [
   {
     id: 0,
