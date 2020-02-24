@@ -1,26 +1,50 @@
 import uuid from "uuidv4";
-
 const ADD_CARD = "ADD_CARD";
 const ADD_LIST = "ADD_LIST";
-const id = uuid();
+const DRAG_HAPPENED = "DRAG_HAPPENED";
 
-export const addList = () => ({ type: ADD_LIST, payload: { id } });
-const initialState = {
-  "0번리스트": {
-    id: "0번리스트",
-    title: "myList",
-    cards: ["0번카드"]
-  }
+export const addList = title => {
+  return dispatch => {
+    const id = uuid();
+    dispatch({ type: ADD_LIST, payload: { title, id } });
+  };
 };
+const initialState = [
+  {
+    id: 0,
+    title: "myList",
+    cards: ["0카드"]
+  }
+];
+export const sort = (
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  draggableId,
+  type
+) => ({
+  type: DRAG_HAPPENED,
+  payload: {
+    droppableIdStart,
+    droppableIdEnd,
+    droppableIndexStart,
+    droppableIndexEnd,
+    draggableId,
+    type
+  }
+});
+
 export default function listReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_LIST: {
       const { title, id } = action.payload;
       const newList = {
+        id: `${id}리스트`,
         title: title,
-        id: `리스트${id}`,
         cards: []
       };
+      return newList;
     }
     case ADD_CARD:
     default:
