@@ -1,7 +1,7 @@
 import uuid from "uuid/v4";
 const ADD_CARD = "ADD_CARD";
 const EDIT_CARD = "EDIT_CARD";
-
+const DELETE_CARD = "DELETE_CARD";
 export const addCard = (listID, text) => {
   const id = uuid();
   return {
@@ -15,7 +15,12 @@ export const editCard = (id, listID, cardText) => {
     payload: { id, listID, cardText }
   };
 };
-
+export const deleteCard = (id, listID) => {
+  return {
+    type: DELETE_CARD,
+    payload: { id, listID }
+  };
+};
 const initialState = {
   "0카드": {
     text: "전에할일",
@@ -41,6 +46,12 @@ export default function cardReducer(state = initialState, action) {
       const card = state[id];
       card.text = cardText;
       return { ...state, [`${id}카드`]: card };
+    }
+    case DELETE_CARD: {
+      const { id } = action.payload;
+      const deleteState = state;
+      delete deleteState[id];
+      return deleteState;
     }
     default:
       return state;

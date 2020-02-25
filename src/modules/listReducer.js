@@ -2,12 +2,18 @@ import uuid from "uuid/v4";
 const ADD_CARD = "ADD_CARD";
 const ADD_LIST = "ADD_LIST";
 const DRAG_HAPPENED = "DRAG_HAPPENED";
+const DELETE_CARD = "DELETE_CARD";
 
 export const addList = title => {
   const id = uuid();
   return { type: ADD_LIST, payload: { title, id } };
 };
-
+export const deleteCard = (id, listID) => {
+  return {
+    type: DELETE_CARD,
+    payload: { id, listID }
+  };
+};
 const initialState = {
   "0리스트": {
     id: "0리스트",
@@ -82,7 +88,14 @@ export default function listReducer(state = initialState, action) {
         };
       }
       return state;
+    case DELETE_CARD: {
+      const { listID, id } = action.payload;
 
+      const list = state[listID];
+
+      const newCards = list.cards.filter(cardID => cardID !== id);
+      return { ...state, [listID]: { ...list, cards: newCards } };
+    }
     default:
       return state;
   }

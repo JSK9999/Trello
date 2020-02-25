@@ -8,7 +8,7 @@ import TrelloForm from "./TrelloForm";
 import TrelloButton from "./TrelloButton";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { editCard } from "../modules/cardReducer";
+import { editCard, deleteCard } from "../modules/cardReducer";
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -47,7 +47,7 @@ const DeleteButton = styled(Icon)`
   }
 `;
 function TrelloCard({ text, id, index, listID }) {
-  console.log(text);
+  console.log(listID);
   console.log(id);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
@@ -63,6 +63,9 @@ function TrelloCard({ text, id, index, listID }) {
     e.preventDefault();
     dispatch(editCard(id, listID, cardText));
     setEdit(false);
+  };
+  const handleDeleteCard = e => {
+    dispatch(deleteCard(id, listID));
   };
   const renderEditForm = () => {
     return (
@@ -88,6 +91,9 @@ function TrelloCard({ text, id, index, listID }) {
               <EditButton onMouseDown={() => setEdit(true)} fontSize="small">
                 edit
               </EditButton>
+              <DeleteButton fontSize="small" onMouseDown={handleDeleteCard}>
+                delete
+              </DeleteButton>
               <CardContent>
                 <Typography>{text}</Typography>
               </CardContent>

@@ -61,7 +61,7 @@ function TrelloList({ title, cards, listID, list, index }) {
                         key={card.id}
                         id={card.id}
                         index={index}
-                        list={listID}
+                        listID={listID}
                       />
                     );
                   })}
