@@ -12,7 +12,7 @@ import TrelloOpenForm from "./TrelloOpenForm";
 function TrelloAdd(props) {
   console.log(props);
   const { listID, list } = props;
-  // const list = useSelector(state => state.lists);
+
   const dispatch = useDispatch();
   const [state, setState] = useState({
     formOpen: false,

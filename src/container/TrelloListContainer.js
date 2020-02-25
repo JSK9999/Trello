@@ -14,6 +14,7 @@ const ListsContainer = styled.div`
 function TrelloListContainer() {
   const lists = useSelector(state => state.lists);
   const origin = useSelector(state => state.origin);
+
   const cards = useSelector(state => state.cards);
   const dispatch = useDispatch();
   const onDragEnd = result => {
@@ -59,7 +60,7 @@ function TrelloListContainer() {
                   );
                 }
               })}
-
+              {provided.placeholder}
               <TrelloAdd list />
             </ListsContainer>
           )}
