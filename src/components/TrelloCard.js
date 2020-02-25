@@ -25,6 +25,7 @@ const EditButton = styled(Icon)`
   opacity: 0.5;
   ${CardContainer}:hover & {
     display: block;
+    color: #01df01;
     cursor: pointer;
   }
   &:hover {
@@ -40,6 +41,7 @@ const DeleteButton = styled(Icon)`
   opacity: 0.5;
   ${CardContainer}:hover & {
     display: block;
+    color: #df013a;
     cursor: pointer;
   }
   &:hover {
@@ -88,9 +90,12 @@ function TrelloCard({ text, id, index, listID }) {
             ref={porvided.innerRef}
           >
             <Card>
-              <EditButton onMouseDown={() => setEdit(true)} fontSize="small">
-                edit
-              </EditButton>
+              {cardText && (
+                <EditButton onMouseDown={() => setEdit(true)} fontSize="small">
+                  edit
+                </EditButton>
+              )}
+
               <DeleteButton fontSize="small" onMouseDown={handleDeleteCard}>
                 delete
               </DeleteButton>
