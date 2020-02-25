@@ -9,11 +9,17 @@ export const addCard = (listID, text) => {
     payload: { listID, text, id }
   };
 };
+export const editCard = (id, listID, cardText) => {
+  return {
+    type: EDIT_CARD,
+    payload: { id, listID, cardText }
+  };
+};
 
 const initialState = {
   "0카드": {
     text: "전에할일",
-    id: `0카드`,
+    id: "0카드",
     list: "0리스트"
   }
 };
@@ -29,6 +35,12 @@ export default function cardReducer(state = initialState, action) {
         list: listID
       };
       return { ...state, [`${id}카드`]: newCard };
+    }
+    case EDIT_CARD: {
+      const { id, cardText } = action.payload;
+      const card = state[id];
+      card.text = cardText;
+      return { ...state, [`${id}카드`]: card };
     }
     default:
       return state;

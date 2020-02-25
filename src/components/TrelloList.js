@@ -4,6 +4,7 @@ import TrelloCard from "../components/TrelloCard";
 import { useSelector } from "react-redux";
 import TrelloAdd from "./TrelloAdd";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { useState } from "react";
 
 const ListContainer = styled.div`
   background-color: #dfe3e6;

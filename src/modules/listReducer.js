@@ -82,6 +82,7 @@ export default function listReducer(state = initialState, action) {
         };
       }
       return state;
+
     default:
       return state;
   }
