@@ -3,7 +3,8 @@ const ADD_CARD = "ADD_CARD";
 const ADD_LIST = "ADD_LIST";
 const DRAG_HAPPENED = "DRAG_HAPPENED";
 const DELETE_CARD = "DELETE_CARD";
-
+const EDIT_LIST = "EDIT_LIST";
+const DELETE_LIST = "DELETE_LIST";
 export const addList = title => {
   const id = uuid();
   return { type: ADD_LIST, payload: { title, id } };
@@ -12,6 +13,18 @@ export const deleteCard = (id, listID) => {
   return {
     type: DELETE_CARD,
     payload: { id, listID }
+  };
+};
+export const editList = (listID, title) => {
+  return {
+    type: EDIT_LIST,
+    payload: { listID, title }
+  };
+};
+export const deleteList = listID => {
+  return {
+    type: DELETE_LIST,
+    payload: { listID }
   };
 };
 const initialState = {
@@ -95,6 +108,19 @@ export default function listReducer(state = initialState, action) {
 
       const newCards = list.cards.filter(cardID => cardID !== id);
       return { ...state, [listID]: { ...list, cards: newCards } };
+    }
+    case EDIT_LIST: {
+      const { listID, title } = action.payload;
+
+      const list = state[listID];
+      list.title = title;
+      return { ...state, [listID]: list };
+    }
+    case DELETE_LIST: {
+      const { listID } = action.payload;
+      const deleteList = state;
+      delete deleteList[listID];
+      return deleteList;
     }
     default:
       return state;
