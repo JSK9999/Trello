@@ -30,7 +30,7 @@ export const deleteList = listID => {
 const initialState = {
   "0리스트": {
     id: "0리스트",
-    title: "myList",
+    title: "첫번째 리스트",
     cards: ["0카드"]
   }
 };
