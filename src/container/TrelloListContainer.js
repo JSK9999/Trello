@@ -14,7 +14,7 @@ const ListsContainer = styled.div`
 function TrelloListContainer() {
   const lists = useSelector(state => state.lists);
   const origin = useSelector(state => state.origin);
-
+  console.log(origin);
   const cards = useSelector(state => state.cards);
   const dispatch = useDispatch();
   const onDragEnd = result => {

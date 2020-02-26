@@ -2,6 +2,7 @@ const initialState = ["0리스트"];
 
 const ADD_LIST = "ADD_LIST";
 const DRAG_HAPPENED = "DRAG_HAPPENED";
+const DELETE_LIST = "DELETE_LIST";
 export default function originReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_LIST: {
@@ -16,6 +17,12 @@ export default function originReducer(state = initialState, action) {
         return newState;
       }
       return state;
+    case DELETE_LIST: {
+      const { listID } = action.payload;
+      const list = [...state];
+      const deleteState = list.filter(item => item !== listID);
+      return deleteState;
+    }
     default:
       return state;
   }
