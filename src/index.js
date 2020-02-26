@@ -5,15 +5,25 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
-import configureStore from "./store";
-import rootReducer from "./modules";
-import { createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
+import { createGlobalStyle } from "styled-components";
+import Store from "./store";
+import styled from "styled-components";
+const { persistor, store } = Store();
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const GlobalStyle = createGlobalStyle`
+
+ body{
+    background-color: #6E6E6E;
+ }
+`;
+
+//const store = createStore(rootReducer, applyMiddleware(logger));
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <GlobalStyle />
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
