@@ -23,7 +23,7 @@ export const deleteCard = (id, listID) => {
 };
 const initialState = {
   "0카드": {
-    text: "전에할일",
+    text: "안녕하세요 김재선 입니다 ",
     id: "0카드",
     list: "0리스트"
   }
