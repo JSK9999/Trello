@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import { createGlobalStyle } from "styled-components";
 import Store from "./store";
-import styled from "styled-components";
 const { persistor, store } = Store();
 
 const GlobalStyle = createGlobalStyle`

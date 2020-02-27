@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import TrelloCard from "../components/TrelloCard";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import TrelloAdd from "./TrelloAdd";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useState } from "react";
-import { editCard } from "../modules/cardReducer";
+
 import Icon from "@material-ui/core/Icon";
-import { editList, deleteCard, deleteList } from "../modules/listReducer";
+import { editList, deleteList } from "../modules/listReducer";
 
 const ListContainer = styled.div`
   position: relative;
