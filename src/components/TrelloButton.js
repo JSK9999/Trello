@@ -9,9 +9,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const TrelloButton = ({ children, onClick }) => {
+const TrelloButton = ({ children, onClick, onKeyPress }) => {
   return (
-    <StyledButton variant="contained" onMouseDown={onClick}>
+    <StyledButton
+      variant="contained"
+      onMouseDown={onClick}
+      onKeyPress={onKeyPress}
+    >
       {children}
     </StyledButton>
   );
