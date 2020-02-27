@@ -1,16 +1,14 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { addCard } from "../modules/cardReducer";
 import { addList } from "../modules/listReducer";
-import styled from "styled-components";
-import Icon from "@material-ui/core/Icon";
+
 import TrelloForm from "./TrelloForm";
 import TrelloButton from "./TrelloButton";
 import TrelloOpenForm from "./TrelloOpenForm";
 
 function TrelloAdd(props) {
-  console.log(props);
   const { listID, list } = props;
 
   const dispatch = useDispatch();
