@@ -45,6 +45,7 @@ function TrelloAdd(props) {
     if (state.text) {
       setState({ text: "" });
     }
+
     dispatch(addCard(listID, state.text));
   };
 

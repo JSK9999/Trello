@@ -9,6 +9,21 @@ import TrelloButton from "./TrelloButton";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import { editCard, deleteCard } from "../modules/cardReducer";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextareaAutosize
+} from "@material-ui/core";
+
+const StyledTextArea = styled(TextareaAutosize)`
+  resize: none;
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+  outline: none;
+  border: none;
+`;
 
 const CardContainer = styled.div`
   margin: 0 0 8px 0;
@@ -53,6 +68,7 @@ function TrelloCard({ text, id, index, listID }) {
   console.log(id);
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const [modal, setModal] = useState(false);
   const [cardText, setText] = useState(text);
   console.log(cardText);
   const closeForm = e => {
@@ -80,6 +96,12 @@ function TrelloCard({ text, id, index, listID }) {
       </TrelloForm>
     );
   };
+  const openModalForm = () => {
+    setModal(true);
+  };
+  const closeModalForm = () => {
+    setModal(!modal);
+  };
   const renderCard = () => {
     return (
       <Draggable draggableId={String(id)} index={index}>
@@ -100,7 +122,17 @@ function TrelloCard({ text, id, index, listID }) {
                 delete
               </DeleteButton>
               <CardContent>
-                <Typography>{text}</Typography>
+                <Typography noWrap onClick={openModalForm}>
+                  {text}
+                </Typography>
+                <Dialog open={modal} onClose={closeModalForm}>
+                  <DialogTitle>
+                    <h3>세부 내용</h3>
+                  </DialogTitle>
+                  <DialogContent>
+                    <StyledTextArea>{text}</StyledTextArea>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           </CardContainer>

@@ -18,7 +18,8 @@ function App() {
     <>
       <TrelloListContainer />
       <Header>
-        Trello의 리스트 와 카드 추가,수정,삭제 드래그 앤 드롭 기능이 있습니다.
+        Trello의 리스트 와 카드 추가,수정,삭제 드래그 앤 드롭, 카드 클릭시 모달
+        기능이 있습니다.
       </Header>
     </>
   );
